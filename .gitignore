@@ -1,0 +1,10 @@
+.venv/
+venv/
+.env
+.env.*
+!.env.example
+__pycache__/
+*.py[cod]
+.pytest_cache/
+impact-report.json
+impact-summary.md
