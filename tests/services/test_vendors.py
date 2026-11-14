@@ -11,6 +11,10 @@ def test_vendor_service_resolves_vendor_name():
     assert resolve("Northstar Goods")["id"] == "ven_northstar"
 
 
+def test_vendor_resolution_ignores_whitespace_and_case():
+    assert resolve("  NORTHSTAR GOODS  ")["id"] == "ven_northstar"
+
+
 def test_vendor_exposes_processor_region():
     assert resolve("Northstar Goods")["processor_region"] == "north-america"
 
