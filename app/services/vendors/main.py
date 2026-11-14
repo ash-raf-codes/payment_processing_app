@@ -1,7 +1,7 @@
 from fastapi import FastAPI, HTTPException, Query
 
 app = FastAPI(title="Vendor Service")
-VENDORS = [{"id":"ven_northstar", "name":"Northstar Goods"}, {"id":"ven_morrow", "name":"Morrow Home"},
+VENDORS = [{"id":"ven_northstar", "name":"Northstar Goods", "processor_region":"north-america"}, {"id":"ven_morrow", "name":"Morrow Home"},
            {"id":"ven_juniper", "name":"Juniper Supply"}, {"id":"ven_acme", "name":"Acme Store"}]
 
 @app.get("/health")
