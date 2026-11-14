@@ -44,3 +44,13 @@ Install the test dependencies with `pip install -r requirements-dev.txt`, then r
 To compare blind full-suite CI with graph-focused selection, run `python scripts/compare_test_runs.py --changed-service vendors`. The script reports test counts and measured runtime for both runs. Try `payments`, `vendors`, or `gateway` to see how different dependency neighborhoods change the selection. This local benchmark demonstrates the graph idea; the PR Impact Agent CLI will provide the integrated selection in CI.
 
 To create the separate Git root required by `impact-agent`, run `python scripts/export_payflow_demo.py /tmp/payflow-demo` from the agent repository root. The exported repo includes this app's test configuration and service graph metadata. Commit the export as a base snapshot, then create a feature commit for the impact-analysis replay.
+
+## Run impact analysis in GitHub Actions
+
+The workflow in `.github/workflows/pr-impact.yml` indexes the PR base snapshot in MongoDB Atlas, runs `impact-agent analyze` against the PR commits, publishes the Markdown explanation in the Actions run summary, and uploads the JSON report as an artifact. It runs for pull requests targeting `main`, indexes `main` after pushes, and supports manual runs from the Actions tab.
+
+Before using it, add `MONGODB_URI` in the repository's **Settings → Secrets and variables → Actions → New repository secret**. The workflow uses the `pr_impact` database and the stable repository ID `payflow-demo`. Keep the Atlas connection string in the secret; do not commit it in this repository.
+
+To trigger it, push a feature branch and open a pull request to `main`. For a manual run, open **Actions → PR impact tests → Run workflow**; the optional `base_ref` and `head_ref` inputs accept branches or commit SHAs. Ordinary repository secrets are unavailable to workflows triggered by fork pull requests, so run the demo from branches in this repository.
+
+The workflow pins the PR Impact Agent to commit `f16149b` from `xIshanSandhux/mongodb-hackathon`. Update `AGENT_REF` in the workflow to a reviewed, immutable commit SHA when a newer agent version is published.
