@@ -132,4 +132,3 @@ jobs:
             echo "The impact agent or selected tests failed (exit code: ${ANALYZE_EXIT_CODE:-missing})."
             exit 1
           fi
-
