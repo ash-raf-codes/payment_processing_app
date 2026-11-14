@@ -18,6 +18,7 @@ def get_vendor(vendor_id: str):
 
 @app.get("/vendors/resolve")
 def resolve(name: str = Query()):
-    result = next((v for v in VENDORS if v["name"].casefold() == name.casefold()), None)
+    normalized_name = name.strip().casefold()
+    result = next((v for v in VENDORS if v["name"].casefold() == normalized_name), None)
     if not result: raise HTTPException(404, "Vendor not found")
     return result
